@@ -665,7 +665,7 @@ int cardEffect(int card, int choice1, int choice2, int choice3, struct gameState
   switch( card ) 
     {
     case adventurer:
-      playAdventurer(state, currentPlayer, temphand);
+      return playAdventurer(state, currentPlayer, temphand);
       
     case council_room:
       return playCouncilRoom(state, currentPlayer, handPos);
@@ -1270,6 +1270,7 @@ int playAdventurer(struct gameState* state, int currentPlayer, int temphand[])
       state->handCount[currentPlayer]--; //this should just remove the top card (the most recently drawn one).
       z++;
     }
+
   }
   while(z-1 >= 0)
   {

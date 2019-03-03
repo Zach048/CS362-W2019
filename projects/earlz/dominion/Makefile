@@ -29,7 +29,32 @@ runtests: testDrawCard
 	gcov dominion.c >> unittestresult.out
 	cat dominion.c.gcov >> unittestresult.out
 
+randomtestresults: randomtestcard1.c randomtestcard2.c randomtestadventurer.c dominion.o
+	echo "randomtestcard1.c:" >> randomtestresults.out
+	gcc -o randomtestcard1 dominion.c rngs.c randomtestcard1.c $(CFLAGS)
+	./randomtestcard1 >> randomtestresults.out
+	gcov dominion.c -b >> randomtestresults.out 
+	
+	echo "randomtestcard2.c:" >> randomtestresults.out
+	gcc -o randomtestcard2 dominion.c rngs.c randomtestcard2.c $(CFLAGS)
+	./randomtestcard2 >> randomtestresults.out
+	gcov dominion.c -b >> randomtestresults.out 
+	
+	echo "randomtestadventurer.c:" >> randomtestresults.out
+	gcc -o randomtestadventurer dominion.c rngs.c randomtestadventurer.c $(CFLAGS)
+	./randomtestadventurer >> randomtestresults.out
+	gcov dominion.c -f -b >> randomtestresults.out 
+	cat dominion.c.gcov >> randomtestresults.out 
+	
+randomtestcard1: randomtestcard1.c dominion.o
+	gcc -o randomtestcard1 dominion.c rngs.c randomtestcard1.c $(CFLAGS)
 
+randomtestcard2: randomtestcard2.c dominion.o
+	gcc -o randomtestcard2 dominion.c rngs.c randomtestcard2.c $(CFLAGS)
+	
+randomtestadventurer: randomtestadventurer.c dominion.o
+	gcc -o randomtestadventurer dominion.c rngs.c randomtestadventurer.c $(CFLAGS)
+	
 player: player.c interface.o
 	gcc -o player player.c -g  dominion.o rngs.o interface.o $(CFLAGS)
 
